@@ -41,20 +41,12 @@ def create_mgzconvert_pipeline(name='mgzconvert'):
             if 'aparc+aseg' in name:
                 return name
 
-    # brainmask = Node(fs.Binarize(min=0.5,    dilate=1,    out_type='nii.gz'),    name='brainmask')
-    # fill holes in mask, smooth, rebinarize
-    # fillholes = Node(fsl.maths.MathsCommand(args='-fillh -s 3 -thr 0.1 -bin',
-    #                                        out_file='T1_brain_mask.nii.gz'),
-    #                                        name='fillholes')
-    # mask T1 with the mask
-    # brain = Node(fsl.ApplyMask(out_file='T1_brain.nii.gz'),    name='brain')
-
-
     # create brain by converting only freesurfer output
     brain_convert = Node(fs.MRIConvert(out_type='niigz',
                                        out_file='brain.nii.gz'),
                          name='brain_convert')
     brain_binarize = Node(fsl.ImageMaths(op_string='-bin', out_file='T1_brain_mask.nii.gz'), name='brain_binarize')
+
     # cortical and cerebellar white matter volumes to construct wm edge
     # [lh cerebral wm, lh cerebellar wm, rh cerebral wm, rh cerebellar wm, brain stem]
     wmseg = Node(fs.Binarize(out_type='nii.gz',
@@ -68,20 +60,12 @@ def create_mgzconvert_pipeline(name='mgzconvert'):
     # connections
     mgzconvert.connect([(inputnode, fs_import, [('fs_subjects_dir', 'subjects_dir'),
                                                 ('fs_subject_id', 'subject_id')]),
-                        # (fs_import, brainmask, [(('aparc_aseg', get_aparc_aseg), 'in_file')]),
                         (fs_import, head_convert, [('T1', 'in_file')]),
                         (fs_import, wmseg, [(('aparc_aseg', get_aparc_aseg), 'in_file')]),
-                        # (brainmask, fillholes, [('binary_file', 'in_file')]),
-                        # (fillholes, brain, [('out_file', 'mask_file')]),
-                        # (head_convert, brain, [('out_file', 'in_file')]),
-                        ########################################################
-                        ###########!!careful!! change to brain (even brainmask)!!! #################
                         (fs_import, brain_convert, [('brainmask', 'in_file')]),
-                        ########################################################
                         (wmseg, edge, [('binary_file', 'in_file'),
                                        ('binary_file', 'mask_file')]),
                         (head_convert, outputnode, [('out_file', 'anat_head')]),
-                        # (fillholes, outputnode, [('out_file', 'brain_mask')]),
                         (brain_convert, outputnode, [('out_file', 'anat_brain')]),
                         (brain_convert, brain_binarize, [('out_file', 'in_file')]),
                         (brain_binarize, outputnode, [('out_file', 'anat_brain_mask')]),

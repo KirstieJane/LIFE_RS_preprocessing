@@ -17,12 +17,13 @@ Workflow for normalization into MNI152 1mm standard space using ANTs
 def create_normalize_pipeline(name='normalize'):
     # workflow
     normalize = Workflow(name='normalize')
-    # inputnode
+
     inputnode = Node(util.IdentityInterface(fields=['anat', 'standard']), name='inputnode')
-    # outputnode
+
     outputnode = Node(
         util.IdentityInterface(fields=['anat2std_transforms', 'anat2std', 'std2anat_transforms', 'std2anat']),
         name='outputnode')
+
     # normalization with ants
     antsreg = Node(ants.Registration(dimension=3,
                                      transforms=['Rigid', 'Affine', 'SyN'],

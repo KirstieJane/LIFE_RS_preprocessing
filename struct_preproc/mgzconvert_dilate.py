@@ -49,12 +49,6 @@ def create_mgzconvert_pipeline(name='mgzconvert'):
     # mask T1 with the mask
     brain = Node(fsl.ApplyMask(out_file='T1_brain.nii.gz'), name='brain')
 
-    # create brain by converting only freesurfer output
-    # brain_convert=Node(fs.MRIConvert(out_type='niigz',
-    #                                out_file='brain.nii.gz'),
-    #                                name='brain_convert')
-    # brain_binarize=Node(fsl.ImageMaths(op_string='-bin', out_file='T1_brain_mask.nii.gz'), name='brain_binarize')
-    #
 
     # cortical and cerebellar white matter volumes to construct wm edge
     # [lh cerebral wm, lh cerebellar wm, rh cerebral wm, rh cerebellar wm, brain stem]
@@ -75,14 +69,10 @@ def create_mgzconvert_pipeline(name='mgzconvert'):
                         (brainmask, fillholes, [('binary_file', 'in_file')]),
                         (fillholes, brain, [('out_file', 'mask_file')]),
                         (head_convert, brain, [('out_file', 'in_file')]),
-                        # (fs_import, brain_convert, [('brain', 'in_file')]),
                         (wmseg, edge, [('binary_file', 'in_file'),
                                        ('binary_file', 'mask_file')]),
                         (head_convert, outputnode, [('out_file', 'anat_head')]),
                         (fillholes, outputnode, [('out_file', 'brain_mask')]),
-                        # (brain_convert, outputnode, [('out_file', 'anat_brain')]),
-                        # (brain_convert, brain_binarize,[('out_file', 'in_file')]),
-                        # (brain_binarize, outputnode, [('out_file', 'anat_brain_mask')]),
                         (wmseg, outputnode, [('binary_file', 'wmseg')]),
                         (edge, outputnode, [('out_file', 'wmedge')])
                         ])
