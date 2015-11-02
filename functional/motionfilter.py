@@ -5,6 +5,7 @@ Created on Mon Feb  9 12:39:01 2015
 @author: fbeyer
 """
 
+
 def build_filter1(motion_params, outliers, comp_norm=None, detrend_poly=None):
     """From https://github.com/nipy/nipype/blob/master/examples/
     rsfmri_vol_surface_preprocessing_nipy.py#L261
@@ -25,7 +26,7 @@ def build_filter1(motion_params, outliers, comp_norm=None, detrend_poly=None):
     import os
     from scipy.special import legendre
     out_files = []
-    
+
     for idx, filename in enumerate(filename_to_list(motion_params)):
         params = np.genfromtxt(filename)
         if comp_norm:
@@ -41,15 +42,15 @@ def build_filter1(motion_params, outliers, comp_norm=None, detrend_poly=None):
             outlier_vector = np.zeros((out_params.shape[0], 1))
             outlier_vector[index] = 1
             out_params = np.hstack((out_params, outlier_vector))
-    
+
         if detrend_poly:
             timepoints = out_params.shape[0]
             X = np.ones((timepoints, 1))
             for i in range(detrend_poly):
                 X = np.hstack((X, legendre(
-                i + 1)(np.linspace(-1, 1, timepoints))[:, None]))
+                    i + 1)(np.linspace(-1, 1, timepoints))[:, None]))
         out_params = np.hstack((out_params, X))
-        filename = os.path.join(os.getcwd(), "mcart_regressor.txt") #"filter_regressor%02d.txt" % idx)
+        filename = os.path.join(os.getcwd(), "mcart_regressor.txt")  # "filter_regressor%02d.txt" % idx)
         np.savetxt(filename, out_params, fmt="%.10f")
         out_files.append(filename)
     return out_files

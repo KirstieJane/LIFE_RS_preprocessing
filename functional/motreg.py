@@ -5,6 +5,7 @@ Created on Mon Feb  9 12:38:21 2015
 @author: fbeyer
 """
 
+
 def motion_regressors(motion_params, order=0, derivatives=1):
     """From https://github.com/nipy/nipype/blob/master/examples/
     rsfmri_vol_surface_preprocessing_nipy.py#L261
@@ -20,7 +21,7 @@ def motion_regressors(motion_params, order=0, derivatives=1):
         out_params = params
         for d in range(1, derivatives + 1):
             cparams = np.vstack((np.repeat(params[0, :][None, :], d, axis=0),
-                             params))
+                                 params))
             out_params = np.hstack((out_params, np.diff(cparams, d, axis=0)))
         out_params2 = out_params
         for i in range(2, order + 1):

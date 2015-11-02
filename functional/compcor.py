@@ -5,8 +5,9 @@ Created on Mon Feb  9 12:41:23 2015
 @author: fbeyer
 """
 
+
 def extract_noise_components(realigned_file, mask_file, num_components=5,
-extra_regressors=None):
+                             extra_regressors=None):
     """From https://github.com/nipy/nipype/blob/master/examples/
     rsfmri_vol_surface_preprocessing_nipy.py#L261
     Derive components most reflective of physiological noise according to
@@ -41,7 +42,7 @@ extra_regressors=None):
         stdX[stdX == 0] = 1.
         stdX[np.isnan(stdX)] = 1.
         stdX[np.isinf(stdX)] = 1.
-        X = (X - np.mean(X, axis=0))/stdX
+        X = (X - np.mean(X, axis=0)) / stdX
         u, _, _ = linalg.svd(X, full_matrices=False)
         if components is None:
             components = u[:, :num_components]
@@ -50,8 +51,8 @@ extra_regressors=None):
     if extra_regressors:
         regressors = np.genfromtxt(extra_regressors)
         components = np.hstack((components, regressors))
-    
+
     components_file = os.path.join(os.getcwd(), 'noise_regressor.txt')
     np.savetxt(components_file, components, fmt="%.10f")
-   
+
     return components_file
