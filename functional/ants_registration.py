@@ -14,7 +14,7 @@ def create_ants_registration_pipeline(name='ants_registration'):
     # set fsl output type
     fsl.FSLCommand.set_default_output_type('NIFTI_GZ')
     # initiate workflow
-    ants_registration = Workflow(name='ants_registration')
+    ants_registration = Workflow(name=name)
     # inputnode
     inputnode=Node(util.IdentityInterface(fields=['denoised_ts',
     'ants_affine',
