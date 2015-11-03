@@ -122,9 +122,8 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
                                             ('stats.rest_coregistered', 'stats'),
                                             ('rest_denoised_bandpassed_norm.nii.gz',
                                              'rest_preprocessed_nativespace.nii.gz'),
-                                            (
-                                                'rest_denoised_bandpassed_norm_trans.nii.gz',
-                                                'rest_mni_unsmoothed.nii.gz'),
+                                            ('rest_denoised_bandpassed_norm_trans.nii.gz',
+                                             'rest_mni_unsmoothed.nii.gz'),
                                             ('rest_denoised_bandpassed_norm_trans_smooth.nii',
                                              'rest_mni_smoothed.nii')]),
                 name='sink')
@@ -168,13 +167,11 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
         # registration to MNI space
         (selectfiles, ants_registration, [('ants_affine', 'inputnode.ants_affine')]),
         (selectfiles, ants_registration, [('ants_warp', 'inputnode.ants_warp')]),
+
         # FL added fullspectrum
         (denoise, ants_registration_full, [('outputnode.ts_fullspectrum', 'inputnode.denoised_ts')]),
-
-        # registration to MNI space
         (selectfiles, ants_registration_full, [('ants_affine', 'inputnode.ants_affine')]),
         (selectfiles, ants_registration_full, [('ants_warp', 'inputnode.ants_warp')]),
-
 
         (ants_registration, smoothing, [('outputnode.ants_reg_ts', 'inputnode.ts_transformed')]),
 
@@ -220,12 +217,10 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
             ('outputnode.brain_mask_resamp', 'denoise.mask.@brain_resamp'),
             ('outputnode.brain_mask2epi', 'denoise.mask.@brain_mask2epi'),
             ('outputnode.normalized_file', 'denoise.@normalized'),
-            #FL added fullspectrum
+            # FL added fullspectrum
             ('outputnode.ts_fullspectrum', 'denoise.@ts_fullspectrum')
         ]),
         (ants_registration, sink, [('outputnode.ants_reg_ts', 'ants.@antsnormalized')
-                                   ]),
-        (ants_registration_full, sink, [('outputnode.ants_reg_ts', 'ants.@antsnormalized_fullspectrum')
                                    ]),
         (smoothing, sink, [('outputnode.ts_smoothed', '@smoothed.FWHM6')]),
     ])
