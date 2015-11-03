@@ -3,10 +3,13 @@
 Created on Mon Feb  9 11:10:25 2015
 
 @author: fbeyer
+run:
+python struct_preproc/run_structural_sample5.py f /scr/kennedy2/liem/subjects_lists/subjects_sample5_test.txt
+
 """
 
 from structural import create_structural
-import sys
+import sys, os
 
 '''
 Meta script to run structural preprocessing
@@ -24,11 +27,13 @@ elif mode == 'f':
     with open(sys.argv[2], 'r') as f:
         subjects = [line.strip() for line in f]
 
+
 for subject in subjects:
     print 'Running subject ' + subject
-    working_dir = '/scr/adenauer1/Franz/LIFE_test/Lemon_mod/' + subject + '/'
-    data_dir = '/scr/adenauer1/Franz/LIFE_test/subjects/' + subject + '/'
-    out_dir = '/scr/adenauer1/Franz/LIFE_test/ds/' + subject + '/'
+    root_dir = '/scr/kennedy2/liem/'
+    working_dir = os.path.join(root_dir, 'wd', subject)
+    data_dir = os.path.join(root_dir, 'subjects', subject)
+    out_dir = data_dir
 
     ###########careful
     freesurfer_dir = '/scr/kennedy2/LIFE//freesurfer_all/'
