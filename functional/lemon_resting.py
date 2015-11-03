@@ -86,6 +86,11 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
     ants_registration = create_ants_registration_pipeline()
     ants_registration.inputs.inputnode.ref = standard_brain_resampled
 
+    # FL added fullspectrum
+    # workflow to transform fullspectrum timeseries to MNI
+    ants_registration_full = create_ants_registration_pipeline('ants_registration_full')
+    ants_registration_full.inputs.inputnode.ref = standard_brain_resampled
+
     # workflow to smooth
     smoothing = create_smoothing_pipeline()
     smoothing.inputs.inputnode.fwhm = fwhm_smoothing
@@ -118,7 +123,8 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
                                             ('rest_denoised_bandpassed_norm.nii.gz',
                                              'rest_preprocessed_nativespace.nii.gz'),
                                             (
-                                            'rest_denoised_bandpassed_norm_trans.nii.gz', 'rest_mni_unsmoothed.nii.gz'),
+                                                'rest_denoised_bandpassed_norm_trans.nii.gz',
+                                                'rest_mni_unsmoothed.nii.gz'),
                                             ('rest_denoised_bandpassed_norm_trans_smooth.nii',
                                              'rest_mni_smoothed.nii')]),
                 name='sink')
@@ -162,6 +168,13 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
         # registration to MNI space
         (selectfiles, ants_registration, [('ants_affine', 'inputnode.ants_affine')]),
         (selectfiles, ants_registration, [('ants_warp', 'inputnode.ants_warp')]),
+        # FL added fullspectrum
+        (denoise, ants_registration_full, [('outputnode.ts_fullspectrum', 'inputnode.denoised_ts')]),
+
+        # registration to MNI space
+        (selectfiles, ants_registration_full, [('ants_affine', 'inputnode.ants_affine')]),
+        (selectfiles, ants_registration_full, [('ants_warp', 'inputnode.ants_warp')]),
+
 
         (ants_registration, smoothing, [('outputnode.ants_reg_ts', 'inputnode.ts_transformed')]),
 
@@ -206,14 +219,18 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
             ('outputnode.comp_pF', 'denoise.regress.@comp_pF'),
             ('outputnode.brain_mask_resamp', 'denoise.mask.@brain_resamp'),
             ('outputnode.brain_mask2epi', 'denoise.mask.@brain_mask2epi'),
-            ('outputnode.normalized_file', 'denoise.@normalized')
+            ('outputnode.normalized_file', 'denoise.@normalized'),
+            #FL added fullspectrum
+            ('outputnode.ts_fullspectrum', 'denoise.@ts_fullspectrum')
         ]),
         (ants_registration, sink, [('outputnode.ants_reg_ts', 'ants.@antsnormalized')
+                                   ]),
+        (ants_registration_full, sink, [('outputnode.ants_reg_ts', 'ants.@antsnormalized_fullspectrum')
                                    ]),
         (smoothing, sink, [('outputnode.ts_smoothed', '@smoothed.FWHM6')]),
     ])
 
-    # func_preproc.write_graph(dotfilename='func_preproc.dot', graph2use='colored', format='pdf', simple_form=True)
+    func_preproc.write_graph(dotfilename='func_preproc.dot', graph2use='colored', format='pdf', simple_form=True)
     func_preproc.run(plugin='CondorDAGMan')
     # plugin='MultiProc'plugin='MultiProc'plugin='CondorDAGMan')plugin='CondorDAGMan'
     # func_preproc.run()plugin='CondorDAGMan'plugin='CondorDAGMan'plugin='CondorDAGMan'

@@ -53,6 +53,8 @@ def create_denoise_pipeline(name='denoise'):
                                                                'comp_regressor',
                                                                'comp_F',
                                                                'comp_pF',
+                                                               # FL added fullspectrum
+                                                               'ts_fullspectrum',
                                                                'normalized_file']),
                       name='outputnode')
     # run fast to get tissue probability classes
@@ -188,7 +190,9 @@ def create_denoise_pipeline(name='denoise'):
     bandpass_filter.plugin_args = {'submit_specs': 'request_memory = 17000'}
     denoise.connect([(inputnode, bandpass_filter, [('highpass_sigma', 'highpass_sigma'),
                                                    ('lowpass_sigma', 'lowpass_sigma')]),
-                     (filter2, bandpass_filter, [('out_res', 'in_file')])
+                     (filter2, bandpass_filter, [('out_res', 'in_file')]),
+                     # FL added fullspectrum to outputnoded
+                     (filter2, outputnode, [('out_res', 'ts_fullspectrum')])
                      ])
     # time-normalize scans
     normalize_time = Node(util.Function(input_names=['in_file', 'tr'],
