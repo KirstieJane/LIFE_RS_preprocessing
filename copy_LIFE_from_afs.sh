@@ -4,7 +4,7 @@
 #create folder structure and copy the data from the LIFE-folder to the subject's folders
 
 orig_dir="/afs/cbs.mpg.de/projects/life/patients"
-results_dir="/scr/kennedy2/liem/subjects"
+results_dir="/scr/kennedy2/liem/sample_5/subjects"
 
 subj_file="/scr/kennedy2/liem/subjects_lists/subjects_sample5_test.txt"
 
