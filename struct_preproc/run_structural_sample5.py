@@ -30,7 +30,7 @@ elif mode == 'f':
 
 for subject in subjects:
     print 'Running subject ' + subject
-    root_dir = '/scr/kennedy2/liem/'
+    root_dir = '/scr/kennedy2/liem/sample_5'
     working_dir = os.path.join(root_dir, 'wd', subject)
     data_dir = os.path.join(root_dir, 'subjects', subject)
     out_dir = data_dir
