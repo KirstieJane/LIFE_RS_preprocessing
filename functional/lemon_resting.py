@@ -125,7 +125,11 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
                                             ('rest_denoised_bandpassed_norm_trans.nii.gz',
                                              'rest_mni_unsmoothed.nii.gz'),
                                             ('rest_denoised_bandpassed_norm_trans_smooth.nii',
-                                             'rest_mni_smoothed.nii')]),
+                                             'rest_mni_smoothed.nii'),
+                                            # FL added
+                                            ('rest2anat_denoised.nii.gz', 'rest_preprocessed_nativespace_fullspectrum.nii.gz'),
+                                            ('rest2anat_denoised_trans.nii.gz', 'rest_mni_unsmoothed_fullspectrum.nii.gz')
+                                            ]),
                 name='sink')
 
 
@@ -220,8 +224,8 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
             # FL added fullspectrum
             ('outputnode.ts_fullspectrum', 'denoise.@ts_fullspectrum')
         ]),
-        (ants_registration, sink, [('outputnode.ants_reg_ts', 'ants.@antsnormalized')
-                                   ]),
+        (ants_registration, sink, [('outputnode.ants_reg_ts', 'ants.@antsnormalized')]),
+        (ants_registration_full, sink, [('outputnode.ants_reg_ts', 'ants.@antsnormalized_fullspectrum')]),
         (smoothing, sink, [('outputnode.ts_smoothed', '@smoothed.FWHM6')]),
     ])
 
