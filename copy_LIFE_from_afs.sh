@@ -6,7 +6,7 @@
 orig_dir="/afs/cbs.mpg.de/projects/life/patients"
 results_dir="/scr/kennedy2/liem/sample_5/subjects"
 
-subj_file="/scr/kennedy2/liem/subjects_lists/subjects_sample5_test.txt"
+subj_file="/scr/kennedy2/liem/subjects_lists/subjects_big_sample5_2.txt"
 
 read_files()
 {
