@@ -33,6 +33,7 @@ def check_if_wf_is_ok(batch_path_template, crash_path_template, subjects_list):
         exit_status = get_condor_exit_status(batch_path)
         crash_status = check_if_wf_crashed(crash_path)
         df.loc[subject_id] = [exit_status[0], exit_status[1], crash_status]
+
     df_crashed = df[(df['exitcode'] > 0) | (df['crashed'] == True)]
     if len(df_crashed) > 0:
         print df_crashed
