@@ -4,7 +4,7 @@ Created on Mon Feb  9 11:10:25 2015
 
 @author: fbeyer
 run:
-python struct_preproc/run_structural_sample5.py f /scr/kennedy2/liem/subjects_lists/subjects_sample5_test.txt
+python struct_preproc/run_structural_sample5.py f /scr/kennedy2/liem/subjects_lists/subjects_big_sample5_2_clean_n1184.txt
 
 """
 

@@ -4,7 +4,7 @@ Created on Mon Feb  9 12:27:06 2015
 
 @author: fbeyer
 run:
-python functional/run_lemon_resting_sample5.py f /scr/kennedy2/liem/subjects_lists/subjects_sample5_test.txt
+python functional/run_lemon_resting_sample5.py f /scr/kennedy2/liem/subjects_lists/subjects_big_sample5_2_clean_n1184.txt
 """
 
 from lemon_resting import create_lemon_resting
@@ -29,7 +29,9 @@ for subject in subjects:
     print 'Running subject ' + subject
     ##
     root_dir = '/scr/kennedy2/liem/sample_5'
-    working_dir = os.path.join(root_dir, 'wd', subject)
+    #working_dir = os.path.join(root_dir, 'wd', subject)
+    working_dir = os.path.join('/scr/kansas1/liem/sample_5', 'wd', subject)
+
     data_dir = os.path.join(root_dir, 'subjects', subject)
     out_dir = os.path.join(data_dir, 'preprocessed/mod/resting/')
 
