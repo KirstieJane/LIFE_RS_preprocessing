@@ -25,12 +25,12 @@ do
 subject="${DEM}"
 
 check_files=(${results_dir}/${subject}/func/EPI_t2.nii
-$results_dir/$subject/anat/MPRAGE_t1.nii
-$results_dir/$subject/unwarp/B0_mag.nii
-$results_dir/$subject/unwarp/B0_ph.nii)
+${results_dir}/${subject}/anat/MPRAGE_t1.nii
+${results_dir}/${subject}/unwarp/B0_mag.nii
+${results_dir}/${subject}/unwarp/B0_ph.nii)
 
 missing=0
-for file in $check_files
+for file in ${check_files[*]}
 do
     if [ ! -e $file ]
     then
@@ -44,7 +44,7 @@ then
     echo remove $subject
     cmd="rm -rf $results_dir/$subject"
     echo $cmd
-    $cmd
+    #$cmd
 fi
 
 done < ${1}
