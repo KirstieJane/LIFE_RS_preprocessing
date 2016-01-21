@@ -5,7 +5,7 @@ Created on Mon Feb  9 11:10:25 2015
 @author: fbeyer
 """
 
-from structural import create_structural
+from struct_preproc.structural import create_structural
 import sys
 
 '''
