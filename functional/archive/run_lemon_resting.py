@@ -5,7 +5,7 @@ Created on Mon Feb  9 12:27:06 2015
 @author: fbeyer
 """
 
-from lemon_resting import create_lemon_resting
+from functional.lemon_resting import create_lemon_resting
 import sys
 import os
 

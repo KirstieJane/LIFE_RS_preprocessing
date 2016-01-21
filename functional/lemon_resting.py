@@ -9,6 +9,7 @@ from nipype.pipeline.engine import Node, Workflow
 import nipype.interfaces.utility as util
 import nipype.interfaces.io as nio
 import nipype.interfaces.fsl as fsl
+
 from strip_rois import strip_rois_func
 from moco import create_moco_pipeline
 from fieldmap_coreg import create_fmap_coreg_pipeline
@@ -17,7 +18,6 @@ from ants_registration import create_ants_registration_pipeline
 from denoise import create_denoise_pipeline
 from smoothing import create_smoothing_pipeline
 from visualize import create_visualize_pipeline
-from slicetiming_correction import create_slice_timing_pipeline
 
 '''
 Main workflow for lemon resting state preprocessing.

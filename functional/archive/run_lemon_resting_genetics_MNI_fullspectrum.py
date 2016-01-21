@@ -7,7 +7,7 @@ run:
 python functional/run_lemon_resting_sample5.py f /scr/kennedy2/liem/subjects_lists/subjects_big_sample5_2_clean_n1184.txt
 """
 
-from normalization_fullspectrum import normalization_fullspectrum
+from functional.normalization_fullspectrum import normalization_fullspectrum
 import sys
 import os
 
