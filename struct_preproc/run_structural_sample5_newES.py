@@ -30,13 +30,13 @@ elif mode == 'f':
 
 for subject in subjects:
     print 'Running subject ' + subject
-    root_dir = '/scr/kennedy2/liem/sample_5'
+    root_dir = '/scr/adenauer1/Franz/LIFE_es'
     working_dir = os.path.join(root_dir, 'wd', subject)
     data_dir = os.path.join(root_dir, 'subjects', subject)
     out_dir = data_dir
 
     ###########careful
-    freesurfer_dir = '/scr/kennedy2/LIFE//freesurfer_all/'
+    freesurfer_dir = '/scr/adenauer1/Franz/LIFE_es/FS/'
     # # #
 
 
