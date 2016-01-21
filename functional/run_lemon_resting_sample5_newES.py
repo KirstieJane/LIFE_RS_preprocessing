@@ -28,23 +28,23 @@ elif mode == 'f':
 for subject in subjects:
     print 'Running subject ' + subject
     ##
-    root_dir = '/scr/kennedy2/liem/sample_5'
+    root_dir = '/scr/adenauer1/Franz/LIFE_es' #'/scr/kennedy2/liem/sample_5'
     #working_dir = os.path.join(root_dir, 'wd', subject)
     #working_dir = os.path.join('/scr/kansas1/liem/sample_5', 'wd', subject)
-    working_dir = os.path.join('/nobackup/clustercache/liem/sample_5', 'wd', subject)
+    working_dir = os.path.join(root_dir, 'wd', subject)
 
     data_dir = os.path.join(root_dir, 'subjects', subject)
     out_dir = os.path.join(data_dir, 'preprocessed/mod/resting/')
 
-    freesurfer_dir = '/scr/kennedy2/LIFE/freesurfer_all/'
+    freesurfer_dir = '/scr/adenauer1/Franz/LIFE_es/FS'
 
     standard_brain = '/usr/share/fsl/5.0/data/standard/MNI152_T1_2mm_brain.nii.gz'
     standard_brain_mask = '/usr/share/fsl/5.0/data/standard/MNI152_T1_2mm_brain_mask.nii.gz'
 
-    standard_brain_resampled = '/scr/kennedy2/liem/Templates/MNI_resampled.nii'
-    standard_brain_mask_resampled = '/scr/kennedy2/liem/Templates/MNI_resampled_brain_mask.nii'
+    standard_brain_resampled = '/scr/adenauer1/Franz/LIFE_es/Templates/MNI_resampled.nii'
+    standard_brain_mask_resampled = '/scr/adenauer1/Franz/LIFE_es/Templates/MNI_resampled_brain_mask.nii'
 
-    echo_space = 0.000512  # in sec
+    echo_space = 0.00058 #0.000512  # in sec
     te_diff = 2.46  # in ms
     epi_resolution = 3.0
     TR = 2.0

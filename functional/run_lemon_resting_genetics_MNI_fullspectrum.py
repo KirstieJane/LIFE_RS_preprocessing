@@ -7,7 +7,7 @@ run:
 python functional/run_lemon_resting_sample5.py f /scr/kennedy2/liem/subjects_lists/subjects_big_sample5_2_clean_n1184.txt
 """
 
-from lemon_resting import create_lemon_resting
+from normalization_fullspectrum import normalization_fullspectrum
 import sys
 import os
 
@@ -28,13 +28,13 @@ elif mode == 'f':
 for subject in subjects:
     print 'Running subject ' + subject
     ##
-    root_dir = '/scr/kennedy2/liem/sample_5'
+    root_dir = '/scr/kennedy2/liem/genetrics_MNI_fullspectrum'
     #working_dir = os.path.join(root_dir, 'wd', subject)
     #working_dir = os.path.join('/scr/kansas1/liem/sample_5', 'wd', subject)
-    working_dir = os.path.join('/nobackup/clustercache/liem/sample_5', 'wd', subject)
+    working_dir = os.path.join('/nobackup/clustercache/liem/genetics_MNI_fullspectrum', 'wd', subject)
 
-    data_dir = os.path.join(root_dir, 'subjects', subject)
-    out_dir = os.path.join(data_dir, 'preprocessed/mod/resting/')
+    data_dir = '/scr/kennedy2/data_fbeyer/genetics/'
+    out_dir = os.path.join(root_dir, subject, 'preprocessed/mod/resting/')
 
     freesurfer_dir = '/scr/kennedy2/LIFE/freesurfer_all/'
 
@@ -53,7 +53,7 @@ for subject in subjects:
     vol_to_remove = 5
     pe_dir = 'y-'
     fwhm_smoothing = 6.0
-    create_lemon_resting(subject=subject,
+    normalization_fullspectrum(subject=subject,
                          working_dir=working_dir,
                          data_dir=data_dir,
                          freesurfer_dir=freesurfer_dir,
