@@ -29,8 +29,8 @@ for subject in subjects:
     print 'Running subject ' + subject
     ##
     root_dir = '/scr/kennedy2/liem/sample_5'
-    #working_dir = os.path.join(root_dir, 'wd', subject)
-    #working_dir = os.path.join('/scr/kansas1/liem/sample_5', 'wd', subject)
+    # working_dir = os.path.join(root_dir, 'wd', subject)
+    # working_dir = os.path.join('/scr/kansas1/liem/sample_5', 'wd', subject)
     working_dir = os.path.join('/nobackup/clustercache/liem/sample_5', 'wd', subject)
 
     data_dir = os.path.join(root_dir, 'subjects', subject)

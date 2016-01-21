@@ -16,34 +16,29 @@ def create_ants_registration_pipeline(name='ants_registration'):
     # initiate workflow
     ants_registration = Workflow(name=name)
     # inputnode
-    inputnode=Node(util.IdentityInterface(fields=['denoised_ts',
-    'ants_affine',
-    'ants_warp',
-    'ref'
-    ]),
-    name='inputnode')
+    inputnode = Node(util.IdentityInterface(fields=['denoised_ts',
+                                                    'ants_affine',
+                                                    'ants_warp',
+                                                    'ref'
+                                                    ]),
+                     name='inputnode')
     # outputnode
-    outputnode=Node(util.IdentityInterface(fields=['ants_reg_ts',
-    ]),
-    name='outputnode')
+    outputnode = Node(util.IdentityInterface(fields=['ants_reg_ts',
+                                                     ]),
+                      name='outputnode')
 
-    #also transform to mni space
-    collect_transforms = Node(interface = util.Merge(2),name='collect_transforms')    
-    
-    ants_reg = Node(ants.ApplyTransforms(input_image_type = 3, dimension = 3, interpolation = 'Linear'), name='ants_reg')
-    
-    
-    
-    
+    # also transform to mni space
+    collect_transforms = Node(interface=util.Merge(2), name='collect_transforms')
+
+    ants_reg = Node(ants.ApplyTransforms(input_image_type=3, dimension=3, interpolation='Linear'), name='ants_reg')
+
     ants_registration.connect([
-                          (inputnode, ants_reg, [('denoised_ts', 'input_image')]),
-                          (inputnode, ants_reg, [('ref', 'reference_image')]),
-                          (inputnode, collect_transforms, [('ants_affine', 'in1')]),
-                          (inputnode, collect_transforms, [('ants_warp', 'in2')]),
-                          (collect_transforms, ants_reg,  [('out', 'transforms')]),
-                          (ants_reg, outputnode, [('output_image', 'ants_reg_ts')])
-                          ])
-                          
+        (inputnode, ants_reg, [('denoised_ts', 'input_image')]),
+        (inputnode, ants_reg, [('ref', 'reference_image')]),
+        (inputnode, collect_transforms, [('ants_affine', 'in1')]),
+        (inputnode, collect_transforms, [('ants_warp', 'in2')]),
+        (collect_transforms, ants_reg, [('out', 'transforms')]),
+        (ants_reg, outputnode, [('output_image', 'ants_reg_ts')])
+    ])
+
     return ants_registration
-    
-    
