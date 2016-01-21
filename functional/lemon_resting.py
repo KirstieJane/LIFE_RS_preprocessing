@@ -96,7 +96,8 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
     smoothing.inputs.inputnode.fwhm = fwhm_smoothing
 
     # workflow to slice time in the end as a try
-    slicetiming = create_slice_timing_pipeline()
+    # fixme slice timing?
+    # slicetiming = create_slice_timing_pipeline()
 
     # visualize registration results
     visualize = create_visualize_pipeline()
@@ -127,6 +128,7 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
                                             ('rest_denoised_bandpassed_norm_trans_smooth.nii',
                                              'rest_mni_smoothed.nii'),
                                             # FL added
+                                            ('rest2anat_masked.nii.gz', 'rest_coregistered_nativespace.nii.gz'),
                                             ('rest2anat_denoised.nii.gz', 'rest_preprocessed_nativespace_fullspectrum.nii.gz'),
                                             ('rest2anat_denoised_trans.nii.gz', 'rest_mni_unsmoothed_fullspectrum.nii.gz')
                                             ]),
@@ -157,8 +159,10 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
         (fmap_coreg, transform_ts, [('outputnode.fmap_fullwarp', 'inputnode.fullwarp')]),
 
         # correct slicetiming
-        (transform_ts, slicetiming, [('outputnode.trans_ts_masked', 'inputnode.ts')]),
-        (slicetiming, denoise, [('outputnode.ts_slicetcorrected', 'inputnode.epi_coreg')]),
+        # FIXME slice timing?
+        # (transform_ts, slicetiming, [('outputnode.trans_ts_masked', 'inputnode.ts')]),
+        # (slicetiming, denoise, [('outputnode.ts_slicetcorrected', 'inputnode.epi_coreg')]),
+        (transform_ts, denoise, [('outputnode.trans_ts_masked', 'inputnode.epi_coreg')]),
 
         # denoise data
         (selectfiles, denoise, [('brain_mask', 'inputnode.brain_mask'),
@@ -199,12 +203,14 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
                             ('outputnode.fmap_fullwarp', 'coregister.transforms2anat.@fmap_fullwarp'),
                             ('outputnode.epi2anat', 'coregister.@epi2anat'),
                             ('outputnode.epi2anat_mat', 'coregister.transforms2anat.@epi2anat_mat'),
-                            ('outputnode.epi2anat_dat', 'coregister.transforms2anat.@epi2anat_dat'),
+                            ('outputnode.epi2anat_dat', 'sink.transforms2anat.@epi2anat_dat'),
                             ('outputnode.epi2anat_mincost', 'coregister.@epi2anat_mincost')
                             ]),
-        (transform_ts, sink, [  # ('outputnode.trans_ts', 'coregister.@full_transform_ts'),
+
+        (transform_ts, sink, [  ('outputnode.trans_ts_masked', 'coregister.@full_transform_ts'),
                                 ('outputnode.trans_ts_mean', 'coregister.@full_transform_mean'),
                                 ('outputnode.resamp_brain', 'coregister.@resamp_brain')]),
+
         (denoise, sink, [
             ('outputnode.wmcsf_mask', 'denoise.mask.@wmcsf_masks'),
             ('outputnode.combined_motion', 'denoise.artefact.@combined_motion'),
@@ -225,7 +231,7 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
             ('outputnode.ts_fullspectrum', 'denoise.@ts_fullspectrum')
         ]),
         (ants_registration, sink, [('outputnode.ants_reg_ts', 'ants.@antsnormalized')]),
-        (ants_registration_full, sink, [('outputnode.ants_reg_ts', 'ants.@antsnormalized_fullspectrum')]),
+            (ants_registration_full, sink, [('outputnode.ants_reg_ts', 'ants.@antsnormalized_fullspectrum')]),
         (smoothing, sink, [('outputnode.ts_smoothed', '@smoothed.FWHM6')]),
     ])
 
