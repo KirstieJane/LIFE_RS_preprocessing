@@ -27,7 +27,6 @@ elif mode == 'f':
     with open(sys.argv[2], 'r') as f:
         subjects = [line.strip() for line in f]
 
-
 for subject in subjects:
     print 'Running subject ' + subject
     root_dir = '/scr/kennedy2/liem/sample_5'
