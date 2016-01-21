@@ -1,4 +1,4 @@
-def redo_normalization(subject, working_dir, data_dir, freesurfer_dir, out_dir,
+def normalization_fullspectrum(subject, working_dir, data_dir, freesurfer_dir, out_dir,
                        vol_to_remove, TR, epi_resolution, highpass, lowpass,
                        echo_space, te_diff, pe_dir, standard_brain, standard_brain_resampled, standard_brain_mask,
                        standard_brain_mask_resampled, fwhm_smoothing):
@@ -32,7 +32,7 @@ def redo_normalization(subject, working_dir, data_dir, freesurfer_dir, out_dir,
         # # new version with brain_extraction from freesurfer  #T1_brain_brain.nii.gz',
         # 'brain_mask': 'preprocessed/mod/anat/T1_brain_mask.nii.gz',  # T1_brain_brain_mask.nii.gz',
         'ants_affine': 'subjects/{subject_id}/preprocessed/mod/anat/transforms2mni/transform0GenericAffine.mat',
-        'ants_warp': 'subjects/{subject_id}/preprocessed/preprocessed/mod/anat/transforms2mni/transform1Warp.nii.gz'
+        'ants_warp': 'subjects/{subject_id}/preprocessed/mod/anat/transforms2mni/transform1Warp.nii.gz'
         }
     # base = /scr/kennedy2/data_fbeyer/genetics/
     selectfiles = Node(nio.SelectFiles(templates,
@@ -87,3 +87,4 @@ def redo_normalization(subject, working_dir, data_dir, freesurfer_dir, out_dir,
 
     func_preproc.write_graph(dotfilename='func_preproc.dot', graph2use='colored', format='pdf', simple_form=True)
     func_preproc.run(plugin='CondorDAGMan')
+    #func_preproc.run()
