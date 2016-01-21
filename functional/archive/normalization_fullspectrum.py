@@ -3,18 +3,9 @@ def normalization_fullspectrum(subject, working_dir, data_dir, freesurfer_dir, o
                        echo_space, te_diff, pe_dir, standard_brain, standard_brain_resampled, standard_brain_mask,
                        standard_brain_mask_resampled, fwhm_smoothing):
     from nipype.pipeline.engine import Node, Workflow
-    import nipype.interfaces.utility as util
     import nipype.interfaces.io as nio
     import nipype.interfaces.fsl as fsl
-    from strip_rois import strip_rois_func
-    from moco import create_moco_pipeline
-    from fieldmap_coreg import create_fmap_coreg_pipeline
-    from transform_timeseries import create_transform_pipeline
     from ants_registration import create_ants_registration_pipeline
-    from denoise import create_denoise_pipeline
-    from smoothing import create_smoothing_pipeline
-    from visualize import create_visualize_pipeline
-    from slicetiming_correction import create_slice_timing_pipeline
 
     fsl.FSLCommand.set_default_output_type('NIFTI_GZ')
     # main workflow
