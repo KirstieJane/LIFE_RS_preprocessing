@@ -4,7 +4,7 @@ Created on Mon Feb  9 11:10:25 2015
 
 @author: fbeyer
 run:
-python struct_preproc/run_structural_LIFE16.py f /scr/adenauer2/Franz/LIFE16/LIFE16_subjects_list_n2559.txt
+python struct_preproc/run_structural_LIFE16.py f /scr/adenauer2/Franz/LIFE16/LIFE16_subjects_list_n2557.txt
 
 """
 
@@ -35,7 +35,7 @@ for subject in subjects:
     root_dir = '/nobackup/clustercache/liem/LIFE'
     working_dir = os.path.join(root_dir, 'wd', subject)
     data_dir = os.path.join(root_dir, subject)
-    out_dir = os.path.join(root_dir, subject, 'preprocessed', 'structural')
+    out_dir = os.path.join(root_dir, 'preprocessed', subject, 'structural')
 
     freesurfer_dir = '/scr/kennedy2/LIFE/freesurfer_all/'
 

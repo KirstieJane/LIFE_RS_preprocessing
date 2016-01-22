@@ -51,14 +51,12 @@ def create_structural(subject, working_dir, data_dir, freesurfer_dir, out_dir, s
     # connections
     struct_preproc.connect(
         [(mgzconvert, normalize, [('outputnode.anat_brain', 'inputnode.anat')]),
-         (mgzconvert, sink, [('outputnode.anat_head', 'preprocessed.mod.anat.@head')]),
-         (mgzconvert, sink, [('outputnode.anat_brain', 'preprocessed.mod.anat.@brain')]),
-         (mgzconvert, sink, [('outputnode.anat_brain_mask', 'preprocessed.mod.anat.@mask')]),
-         (normalize, sink, [('outputnode.anat2std', 'preprocessed.mod.anat.@anat2std'),
-                            ('outputnode.anat2std_transforms',
-                             'preprocessed.mod.anat.transforms2mni.@anat2std_transforms'),
-                            ('outputnode.std2anat_transforms',
-                             'preprocessed.mod.anat.transforms2mni.@std2anat_transforms')])
+         (mgzconvert, sink, [('outputnode.anat_head', '@head')]),
+         (mgzconvert, sink, [('outputnode.anat_brain', '@brain')]),
+         (mgzconvert, sink, [('outputnode.anat_brain_mask', '@mask')]),
+         (normalize, sink, [('outputnode.anat2std', '@anat2std'),
+                            ('outputnode.anat2std_transforms', 'transforms2mni.@anat2std_transforms'),
+                            ('outputnode.std2anat_transforms', 'transforms2mni.@std2anat_transforms')])
          ])
 
     struct_preproc.write_graph(dotfilename='struct_preproc.dot', graph2use='colored', format='pdf', simple_form=True)

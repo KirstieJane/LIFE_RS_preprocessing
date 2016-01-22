@@ -37,20 +37,21 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
     func_preproc.base_dir = working_dir
     func_preproc.config['execution']['crashdump_dir'] = func_preproc.base_dir + "/crash_files"
     # select files
-    templates = {'func': 'func/EPI_t2.nii',
-                 'fmap_phase': 'unwarp/B0_ph.nii',
-                 'fmap_mag': 'unwarp/B0_mag.nii',
-                 'anat_head': 'preprocessed/mod/anat/T1.nii.gz',  # either with mod or without
-                 'anat_brain': 'preprocessed/mod/anat/brain.nii.gz',
+    templates = {'func': 'raw_data/{subject}/func/EPI_t2.nii',
+                 'fmap_phase': 'raw_data/{subject}/unwarp/B0_ph.nii',
+                 'fmap_mag': 'raw_data/{subject}/unwarp/B0_mag.nii',
+                 'anat_head': 'preprocessed/{subject}/structural/T1.nii.gz',  # either with mod or without
+                 'anat_brain': 'preprocessed/{subject}/structural/brain.nii.gz',
                  # new version with brain_extraction from freesurfer  #T1_brain_brain.nii.gz',
-                 'brain_mask': 'preprocessed/mod/anat/T1_brain_mask.nii.gz',  # T1_brain_brain_mask.nii.gz',
-                 'ants_affine': 'preprocessed/mod/anat/transforms2mni/transform0GenericAffine.mat',
-                 'ants_warp': 'preprocessed/mod/anat/transforms2mni/transform1Warp.nii.gz'
+                 'brain_mask': 'preprocessed/{subject}/structural/T1_brain_mask.nii.gz',  # T1_brain_brain_mask.nii.gz',
+                 'ants_affine': 'preprocessed/{subject}/structural/transforms2mni/transform0GenericAffine.mat',
+                 'ants_warp': 'preprocessed/{subject}/structural/transforms2mni/transform1Warp.nii.gz'
                  }
 
     selectfiles = Node(nio.SelectFiles(templates,
                                        base_directory=data_dir),
                        name="selectfiles")
+    selectfiles.inputs.subject = subject
 
 
     # node to remove first volumes
