@@ -6,7 +6,8 @@
 orig_dir="/afs/cbs.mpg.de/projects/life/patients"
 results_dir="/nobackup/clustercache/liem/LIFE/raw_data"
 
-subj_file="/scr/adenauer2/Franz/LIFE16/LIFE16_subjects_list_n2559.txt"
+subj_file="/scr/adenauer2/Franz/LIFE16/LIFE16_subjects_list_n2557.txt"
+
 
 read_files()
 {
