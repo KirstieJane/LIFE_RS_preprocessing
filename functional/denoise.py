@@ -11,7 +11,7 @@ import nipype.interfaces.freesurfer as fs
 import nipype.interfaces.utility as util
 import nipype.algorithms.rapidart as ra
 import nipype.interfaces.afni as afni
-from motreg import motion_regressors
+from motreg import motion_regressors, calc_friston_twenty_four
 from motionfilter import build_filter1
 from compcor import extract_noise_components
 from normalize_timeseries import time_normalizer
@@ -127,12 +127,22 @@ def create_denoise_pipeline(name='denoise'):
                                              ('statistic_files', 'outlier_stats'),
                                              ('plot_files', 'outlier_plots')])])
     # Compute motion regressors
-    motreg = Node(util.Function(input_names=['motion_params', 'order', 'derivatives'],
-                                output_names=['out_files'],
-                                function=motion_regressors),
-                  name='getmotionregress')
-    motreg.plugin_args = {'submit_specs': 'request_memory = 17000'}
-    denoise.connect([(inputnode, motreg, [('moco_par', 'motion_params')])])
+    # motreg = Node(util.Function(input_names=['motion_params', 'order', 'derivatives'],
+    #                             output_names=['out_files'],
+    #                             function=motion_regressors),
+    #               name='getmotionregress')
+    # motreg.plugin_args = {'submit_specs': 'request_memory = 17000'}
+    # denoise.connect([(inputnode, motreg, [('moco_par', 'motion_params')])])
+
+    # Motreg with Friston24
+    friston24 = Node(util.Function(input_names=['in_file'],
+                                   output_names=['friston_par'],
+                                   function=calc_friston_twenty_four),
+                     name='friston24')
+    denoise.connect([(inputnode, friston24, [('moco_par', 'in_file')])])
+
+
+
     # Create a filter to remove motion and art confounds
     createfilter1 = Node(util.Function(input_names=['motion_params', 'comp_norm',
                                                     'outliers', 'detrend_poly'],
@@ -141,11 +151,13 @@ def create_denoise_pipeline(name='denoise'):
                          name='makemotionbasedfilter')
     createfilter1.inputs.detrend_poly = 2
     createfilter1.plugin_args = {'submit_specs': 'request_memory = 17000'}
-    denoise.connect([(motreg, createfilter1, [('out_files', 'motion_params')]),
-                     (artefact, createfilter1, [  # ('norm_files', 'comp_norm'),
-                                                  ('outlier_files', 'outliers')]),
-                     (createfilter1, outputnode, [('out_files', 'mc_regressor')])
-                     ])
+    denoise.connect([
+        # (motreg, createfilter1, [('out_files', 'motion_params')]),
+        (friston24, createfilter1, [('friston_par', 'motion_params')]),
+        (artefact, createfilter1, [  # ('norm_files', 'comp_norm'),
+                                     ('outlier_files', 'outliers')]),
+        (createfilter1, outputnode, [('out_files', 'mc_regressor')])
+    ])
     # regress out motion and art confounds
     filter1 = Node(fsl.GLM(out_f_name='F_mcart.nii.gz',
                            out_pf_name='pF_mcart.nii.gz',
