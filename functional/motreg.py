@@ -30,3 +30,50 @@ def motion_regressors(motion_params, order=0, derivatives=1):
         np.savetxt(filename, out_params2, fmt="%.10f")
         out_files.append(filename)
     return out_files
+
+
+
+
+def calc_friston_twenty_four(in_file):
+    """
+    from https://github.com/FCP-INDI/C-PAC/blob/master/CPAC/generate_motion_statistics/generate_motion_statistics.py
+    Method to calculate friston twenty four parameters
+
+    Parameters
+    ----------
+    in_file: string
+        input movement parameters file from motion correction
+
+    Returns
+    -------
+    new_file: string
+        output 1D file containing 24 parameter values
+
+    """
+
+    import numpy as np
+    import os
+
+    new_data = None
+
+    data = np.genfromtxt(in_file)
+
+    data_squared = data ** 2
+
+    new_data = np.concatenate((data, data_squared), axis=1)
+
+    data_roll = np.roll(data, 1, axis=0)
+
+    data_roll[0] = 0
+
+    new_data = np.concatenate((new_data, data_roll), axis=1)
+
+    data_roll_squared = data_roll ** 2
+
+    new_data = np.concatenate((new_data, data_roll_squared), axis=1)
+
+    new_file = os.path.join(os.getcwd(), 'fristons_twenty_four.1D')
+    np.savetxt(new_file, new_data, fmt='%0.8f', delimiter=' ')
+
+    return new_file
+
