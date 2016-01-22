@@ -239,7 +239,7 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
     ])
 
     func_preproc.write_graph(dotfilename='func_preproc.dot', graph2use='colored', format='pdf', simple_form=True)
-    func_preproc.run(plugin='CondorDAGMan')
+    func_preproc.run(plugin='CondorDAGMan', plugin_args = {'submit_specs': 'request_memory = 1500'})
     # plugin='MultiProc'plugin='MultiProc'plugin='CondorDAGMan')plugin='CondorDAGMan'
     # func_preproc.run()plugin='CondorDAGMan'plugin='CondorDAGMan'plugin='CondorDAGMan'
     # plugin='CondorDAGMan'
