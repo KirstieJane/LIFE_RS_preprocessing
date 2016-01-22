@@ -4,11 +4,11 @@ import os, glob
 
 
 
-wd_path = '/scr/kennedy2/liem/sample_5/wd'
+wd_path = '/nobackup/clustercache/liem/LIFE/wd'
 wf = 'anat_preproc'
 batch_path_template = os.path.join(wd_path, '{subject_id}', wf, 'batch')
 crash_path_template = os.path.join(wd_path, '{subject_id}', 'crash_files')
-check_file_list = ['/scr/kennedy2/liem/sample_5/subjects/{subject_id}/preprocessed/mod/anat/transforms2mni/transform1Warp.nii.gz']
+check_file_list = ['/nobackup/clustercache/liem/LIFE/preprocessed/{subject_id}/structural/transforms2mni/transform1Warp.nii.gz']
 
 os.chdir(wd_path)
 subjects_list = glob.glob('LI*')

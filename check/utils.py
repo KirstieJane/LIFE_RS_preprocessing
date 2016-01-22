@@ -1,4 +1,3 @@
-
 def get_condor_exit_status(batch_dir):
     import yaml
     import glob
@@ -9,7 +8,8 @@ def get_condor_exit_status(batch_dir):
     d = yaml.load(f)
     f.close()
 
-    return(d['exitcode'], d['jobs_failed']) # int 0:ok; >0:not ok
+    return (d['exitcode'], d['jobs_failed'])  # int 0:ok; >0:not ok
+
 
 def check_if_wf_crashed(crash_dir):
     import os
@@ -39,7 +39,21 @@ def check_if_wf_is_ok(batch_path_template, crash_path_template, subjects_list):
         print df_crashed
         everything_ok = False
     else:
-        print('nothing crashed. %s subjects ok'%len(df))
+        print('nothing crashed. %s subjects ok' % len(df))
         everything_ok = True
     return everything_ok
 
+
+def load_subjects_list(subjects_file):
+    '''loads a text file with subject names into a list
+    text file example:
+    ...
+    0152992
+    0189478
+    ...
+    '''
+    import os
+    with open(subjects_file, 'r') as f:
+        subjects_list = [line.strip() for line in f]
+    subjects_list = filter(None, subjects_list)
+    return subjects_list
