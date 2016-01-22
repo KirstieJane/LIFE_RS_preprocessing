@@ -206,7 +206,7 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
                             ('outputnode.fmap_fullwarp', 'coregister.transforms2anat.@fmap_fullwarp'),
                             ('outputnode.epi2anat', 'coregister.@epi2anat'),
                             ('outputnode.epi2anat_mat', 'coregister.transforms2anat.@epi2anat_mat'),
-                            ('outputnode.epi2anat_dat', 'sink.transforms2anat.@epi2anat_dat'),
+                            ('outputnode.epi2anat_dat', 'coregister.transforms2anat.@epi2anat_dat'),
                             ('outputnode.epi2anat_mincost', 'coregister.@epi2anat_mincost')
                             ]),
 
