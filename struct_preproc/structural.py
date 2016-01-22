@@ -61,5 +61,5 @@ def create_structural(subject, working_dir, data_dir, freesurfer_dir, out_dir, s
 
     struct_preproc.write_graph(dotfilename='struct_preproc.dot', graph2use='colored', format='pdf', simple_form=True)
     # struct_preproc.run()
-    struct_preproc.run(plugin='CondorDAGMan', plugin_args = {'submit_specs': 'request_memory = 1500'})  #
+    struct_preproc.run(plugin='CondorDAGMan', plugin_args = {'initial_specs': 'request_memory = 1500'})  #
     # struct_preproc.run(plugin='MultiProc')
