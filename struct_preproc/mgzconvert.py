@@ -45,7 +45,7 @@ def create_mgzconvert_pipeline(name='mgzconvert'):
     brain_convert = Node(fs.MRIConvert(out_type='niigz',
                                        out_file='brain.nii.gz'),
                          name='brain_convert')
-    brain_binarize = Node(fsl.ImageMaths(op_string='-bin', out_file='T1_brain_mask.nii.gz'), name='brain_binarize')
+    brain_binarize = Node(fsl.ImageMaths(op_string='-bin -fillh', out_file='T1_brain_mask.nii.gz'), name='brain_binarize')
 
     # cortical and cerebellar white matter volumes to construct wm edge
     # [lh cerebral wm, lh cerebellar wm, rh cerebral wm, rh cerebellar wm, brain stem]
