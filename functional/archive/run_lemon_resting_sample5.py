@@ -7,7 +7,7 @@ run:
 python functional/run_lemon_resting_sample5.py f /scr/kennedy2/liem/subjects_lists/subjects_big_sample5_2_clean_n1184.txt
 """
 
-from lemon_resting import create_lemon_resting
+from functional.lemon_resting import create_lemon_resting
 import sys
 import os
 
