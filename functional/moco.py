@@ -38,7 +38,8 @@ def create_moco_pipeline(name='motion_correction'):
     mcflirt = Node(fsl.MCFLIRT(save_mats=True,
                                save_plots=True,
                                save_rms=True,
-                               ref_vol=1,
+                               #ref_vol=1,
+                               mean_vol = True,
                                out_file='rest_realigned.nii.gz'
                                ),
                    name='mcflirt')
