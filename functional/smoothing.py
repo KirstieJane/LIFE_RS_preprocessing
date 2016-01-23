@@ -18,7 +18,7 @@ Workflow to smooth functional image
 
 def create_smoothing_pipeline(name='smoothing'):
     # set fsl output type
-    fsl.FSLCommand.set_default_output_type('NIFTI')
+    fsl.FSLCommand.set_default_output_type('NIFTI_GZ')
     # initiate workflow
     smoothing = Workflow(name='smoothing')
     # inputnode
