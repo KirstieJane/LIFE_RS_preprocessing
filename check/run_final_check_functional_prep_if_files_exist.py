@@ -7,7 +7,7 @@ check_file_list = ['preprocessed/{subject_id}/resting_state/ants/rest_mni_unsmoo
                    'preprocessed/{subject_id}/resting_state/ants/rest_mni_unsmoothed.nii.gz',
                    'preprocessed/{subject_id}/resting_state/denoise/rest_preprocessed_nativespace_fullspectrum.nii.gz',
                    'preprocessed/{subject_id}/resting_state/denoise/rest_preprocessed_nativespace.nii.gz',
-                   'preprocessed/{subject_id}/resting_state/FWHM6/rest_mni_smoothed.nii',
+                   'preprocessed/{subject_id}/resting_state/FWHM6/rest_mni_smoothed.nii.gz',
                    'preprocessed/{subject_id}/resting_state/realign/rest_realigned.par',
                    'preprocessed/{subject_id}/structural/transforms2mni/transform0GenericAffine.mat',
                    'preprocessed/{subject_id}/structural/transforms2mni/transform1InverseWarp.nii.gz',
