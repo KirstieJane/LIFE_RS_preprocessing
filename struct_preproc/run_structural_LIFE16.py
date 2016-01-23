@@ -28,7 +28,9 @@ elif mode == 'f':
         subjects = [line.strip() for line in f]
 
 # select fold
-subjects = subjects[:10]
+# subjects = subjects[:1300]
+subjects = subjects[1300:]
+
 
 for subject in subjects:
     print 'Running subject ' + subject

@@ -27,7 +27,11 @@ elif mode == 'f':
 
 
 # select fold
-subjects = subjects[:10]
+subjects = subjects[:450]
+#subjects = subjects[450:900]
+# subjects = subjects[900:1400]
+# subjects = subjects[1400:1900]
+# subjects = subjects[1900:]
 
 for subject in subjects:
     print 'Running subject ' + subject
