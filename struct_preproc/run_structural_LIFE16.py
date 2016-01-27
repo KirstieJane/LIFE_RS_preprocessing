@@ -34,8 +34,9 @@ subjects = subjects[1300:]
 
 for subject in subjects:
     print 'Running subject ' + subject
-    root_dir = '/nobackup/clustercache/liem/LIFE'
-    working_dir = os.path.join(root_dir, 'wd', subject)
+    root_dir = '/data/liem-1/LIFE'
+    root_dir_2 = '/data/liem-2/LIFE'
+    working_dir = os.path.join(root_dir_2, 'wd', subject)
     data_dir = os.path.join(root_dir, subject)
     out_dir = os.path.join(root_dir, 'preprocessed', subject, 'structural')
 
