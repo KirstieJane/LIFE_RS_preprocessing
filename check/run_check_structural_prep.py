@@ -13,7 +13,7 @@ check_file_list = ['/nobackup/clustercache/liem/LIFE/preprocessed/{subject_id}/s
 os.chdir(wd_path)
 subjects_list = glob.glob('LI*')
 
-everything_ok = check_if_wf_is_ok(batch_path_template, crash_path_template, subjects_list)
+everything_ok, df_crashed = check_if_wf_is_ok(batch_path_template, crash_path_template, subjects_list)
 
 
 print('\n\n CHECKING FOR MISSING FILES...')

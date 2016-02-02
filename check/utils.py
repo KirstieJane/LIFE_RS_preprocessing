@@ -2,7 +2,7 @@ def get_condor_exit_status(batch_dir):
     import yaml
     import glob
     import os
-
+    print(batch_dir)
     log_files = glob.glob(os.path.join(batch_dir, 'workflow*.dag.metrics'))
     log_files.sort(key=os.path.getmtime)
     # youngest file
@@ -25,6 +25,7 @@ def check_if_wf_crashed(crash_dir):
 
 def check_if_wf_is_ok(batch_path_template, crash_path_template, subjects_list):
     import pandas as pd
+    import numpy as np
 
     df = pd.DataFrame(columns=['exitcode', 'jobs_failed', 'crashed'])
 
@@ -33,10 +34,12 @@ def check_if_wf_is_ok(batch_path_template, crash_path_template, subjects_list):
         batch_path = batch_path_template.format(subject_id=subject_id)
         crash_path = crash_path_template.format(subject_id=subject_id)
 
-        exit_status = get_condor_exit_status(batch_path)
-        crash_status = check_if_wf_crashed(crash_path)
-        df.loc[subject_id] = [exit_status[0], exit_status[1], crash_status]
-
+        try:
+            exit_status = get_condor_exit_status(batch_path)
+            crash_status = check_if_wf_crashed(crash_path)
+            df.loc[subject_id] = [exit_status[0], exit_status[1], crash_status]
+        except:
+            df.loc[subject_id] = [999, 999, 999]
     df_crashed = df[(df['exitcode'] > 0) | (df['crashed'] == True)]
     if len(df_crashed) > 0:
         print df_crashed
@@ -44,7 +47,7 @@ def check_if_wf_is_ok(batch_path_template, crash_path_template, subjects_list):
     else:
         print('nothing crashed. %s subjects ok' % len(df))
         everything_ok = True
-    return everything_ok
+    return everything_ok, df_crashed
 
 
 def load_subjects_list(subjects_file):
