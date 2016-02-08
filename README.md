@@ -3,12 +3,15 @@
 
 
 # Results
-
+The preprocessed resting state time series in MNI space can be found here:
+resting_state -> ants -> rest_mni_unsmoothed.nii.gz
+the same file with 6mm smoothing here:
+resting_state -> FWHM6 -> rest_mni_smoothed.nii
 
 ## resting_state  
-* ants  
-    * rest_mni_unsmoothed_fullspectrum.nii.gz  
-    * rest_mni_unsmoothed.nii.gz  
+* ants  **EPI in MNI space**
+    * rest_mni_unsmoothed_fullspectrum.nii.gz **preprocessed EPI in MNI space withouth BP filtering**  
+    * rest_mni_unsmoothed.nii.gz  **preprocessed EPI in MNI space with BP filtering (0.01-0.1Hz)**  
 * coregister  
     * rest2anat.dat.mincost **mincost file**  
     * rest_coregistered_nativespace.nii.gz  
@@ -23,27 +26,27 @@
         * rest2anat.dat  **transformation freesurfer format (fieldmap space to anatomy!)**    
         * rest2anat.mat  **transformation fsl format**  
 * denoise  
-    * artefact  
+    * artefact  **rapidart output files (outliers, outlier plot, global intensity, composite norm, stats)**
         * art.rest2anat_masked_outliers.txt  
         * global_intensity.rest2anat_masked.txt  
         * norm.rest2anat_masked.txt  
         * plot.rest2anat_masked.png  
         * stats.rest2anat_masked.txt  
     * mask  
-        * T1_brain_mask2epi.nii.gz  
-        * T1_brain_mask_lowres.nii.gz  
-        * wmcsf_mask_lowres.nii.gz  
-    * regress  
-        * F_mcart.nii.gz  
-        * F_noise.nii.gz  
-        * mcart_regressor.txt  
-        * noise_regressor.txt  
-        * pF_mcart.nii.gz  
-        * pF_noise.nii.gz  
-    * rest_preprocessed_nativespace_fullspectrum.nii.gz  
-    * rest_preprocessed_nativespace.nii.gz  
+        * T1_brain_mask2epi.nii.gz  **brain mask in original epi space (only for qa)**
+        * T1_brain_mask_lowres.nii.gz  **brain mask used during artefact detection and 2nd glm**
+        * wmcsf_mask_lowres.nii.gz  **white matter / csf mask used for acompcor**
+    * regress **Nuisance Regression**
+        * F_mcart.nii.gz  **F-values of full model fit 1st glm**
+        * F_noise.nii.gz  **regressors 2nd glm**
+        * mcart_regressor.txt   **regressors 1st glm**
+        * noise_regressor.txt   **regressors 2nd glm**
+        * pF_mcart.nii.gz  **p-values for full model fit 1st glm**
+        * pF_noise.nii.gz  **F-values of full model fit 2nd glm**
+    * rest_preprocessed_nativespace_fullspectrum.nii.gz **denoised EPI in native space withouth BP filtering**   
+    * rest_preprocessed_nativespace.nii.gz  **denoised EPI in native space with BP filtering (0.01-0.1Hz) ** 
 * FWHM6  
-    * rest_mni_smoothed.nii  
+    * rest_mni_smoothed.nii.gz  **preprocessed EPI in MNI space with BP filtering (0.01-0.1Hz) and smoothing w 6mm**
 * realign  
     * MAT                             **realignment matrices for all volumes**  
         * MAT_0000  

@@ -28,17 +28,26 @@ elif mode == 'f':
 
 # select fold
 # subjects = subjects[:450]
-subjects = subjects[450:900]
-# subjects = subjects[900:1400]
+#subjects = subjects[450:900]
+#subjects = subjects[612:900]
+#subjects = subjects[713:900]
+#subjects = subjects[900:1400]
+#subjects = subjects[1058:1400]
+#subjects = subjects[1152:1400]
+#subjects = subjects[1309:1400]
+# subjects = subjects[1152:1309]
 # subjects = subjects[1400:1900]
 # subjects = subjects[1900:]
+#subjects = subjects[2097:]
+#subjects = subjects[2353:]
+# subjects = subjects[2357:]
 
 for subject in subjects:
     print 'Running subject ' + subject
     ##
     #root_dir = '/nobackup/clustercache/liem/LIFE'
     root_dir = '/data/liem-1/LIFE'
-    root_dir_2 = '/data/liem-2/LIFE'
+    root_dir_2 = '/scr/adenauer2/Franz/LIFE_WD' #'/data/liem-2/LIFE'
     working_dir = os.path.join(root_dir_2, 'wd', subject)
     data_dir = root_dir
     out_dir = os.path.join(root_dir, 'preprocessed', subject, 'resting_state')

@@ -8,7 +8,8 @@ import os, glob
 
 #wd_path = '/scr/kansas1/liem/sample_5/wd'
 #wd_path = '/nobackup/clustercache/liem/LIFE/wd'
-wd_path = '/data/liem-2/LIFE/wd'
+#wd_path = '/data/liem-2/LIFE/wd'
+wd_path = '/scr/adenauer2/Franz/LIFE_WD/wd'
 root_dir = '/data/liem-1/LIFE/'
 
 wf = 'lemon_resting'

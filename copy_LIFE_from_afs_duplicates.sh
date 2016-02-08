@@ -2,12 +2,13 @@
 
 #usage: ./x0_preprocess [subListFile]
 #create folder structure and copy the data from the LIFE-folder to the subject's folders
+# this script is for subjects that participted in 2 studies (e.g. pilot and hauptstudie) and copies the younger data
 
 orig_dir="/afs/cbs.mpg.de/projects/life/patients"
-results_dir="/data/liem-1/LIFE/raw_data"
-
+#results_dir="/data/liem-1/LIFE/raw_data"
+results_dir="/scr/adenauer2/Franz/LIFE16/dup_data/"
 subj_file="/scr/adenauer2/Franz/LIFE16/LIFE16_subjects_list_n2557.txt"
-subj_file="/scr/adenauer2/Franz/LIFE16/subjects_3.txt"
+subj_file="/scr/adenauer2/Franz/LIFE16/duplicates.txt"
 
 
 read_files()
@@ -29,9 +30,20 @@ mkdir -p $results_dir/$subject/unwarp
 mkdir -p $results_dir/$subject/dMRI
 
 #copy the first in the list of MPRAGE-images found.. (supposingly they are all the same)
-first_dir=$(find $orig_dir/$subject -d -name "${subject}"*)
-echo $first_dir
-set -- $first_dir
+#first_dir=$(find $orig_dir/$subject -d -name "${subject}"*)
+#echo $first_dir
+#dir_ar=(${first_dir})
+#second_dir=${dir_ar[1]}
+#echo $second_dir
+echo
+dirs=`ls $orig_dir/$subject`
+dir_ar=($dirs)
+second_dir=$orig_dir/$subject/${dir_ar[1]}
+echo $dirs
+echo $second_dir
+echo
+#set -- $first_dir
+set -- $second_dir
 echo "$1" >> $results_dir/$subject/check/images_used.txt
 
 #copy the first in the list of anatomical images

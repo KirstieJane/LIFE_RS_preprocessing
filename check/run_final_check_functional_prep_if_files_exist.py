@@ -1,7 +1,7 @@
 from utils import check_if_wf_is_ok, load_subjects_list
 import os, glob
 
-root_dir = '/nobackup/clustercache/liem/LIFE/'
+root_dir = '/data/liem-1/LIFE/'
 
 check_file_list = ['preprocessed/{subject_id}/resting_state/ants/rest_mni_unsmoothed_fullspectrum.nii.gz',
                    'preprocessed/{subject_id}/resting_state/ants/rest_mni_unsmoothed.nii.gz',
@@ -14,7 +14,7 @@ check_file_list = ['preprocessed/{subject_id}/resting_state/ants/rest_mni_unsmoo
                    'preprocessed/{subject_id}/structural/transforms2mni/transform1Warp.nii.gz',
                    ]
 
-subjects_list = load_subjects_list('/scr/adenauer2/Franz/LIFE16/LIFE16_subjects_list_n2559_test2.txt')
+subjects_list = load_subjects_list('/scr/adenauer2/Franz/LIFE16/LIFE16_preprocessed_subjects_list_n2557.txt')
 print subjects_list
 
 print('\n\n CHECKING FOR MISSING FILES...')
