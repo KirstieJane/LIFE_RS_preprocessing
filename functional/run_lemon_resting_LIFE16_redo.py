@@ -11,45 +11,14 @@ from lemon_resting import create_lemon_resting
 import sys
 import os
 
-'''
-Meta script to run lemon resting state preprocessing
----------------------------------------------------
-Can run in two modes:
-python run_lemon_resting.py s {subject_id}
-python run_lemon_resting.py f {text file containing list of subjects}
-'''
-mode = sys.argv[1]
-if mode == 's':
-    subjects = [sys.argv[2]]
-elif mode == 'f':
-    with open(sys.argv[2], 'r') as f:
-        subjects = [line.strip() for line in f]
-
-
-# select fold
-# subjects = subjects[:450]
-#subjects = subjects[450:900]
-#subjects = subjects[612:900]
-#subjects = subjects[713:900]
-#subjects = subjects[900:1400]
-#subjects = subjects[1058:1400]
-#subjects = subjects[1152:1400]
-#subjects = subjects[1309:1400]
-# subjects = subjects[1152:1309]
-# subjects = subjects[1400:1900]
-# subjects = subjects[1900:]
-#subjects = subjects[2097:]
-#subjects = subjects[2353:]
-# subjects = subjects[2357:]
+subjects = ['LI00156432', 'LI01171116', 'LI01287335']
 
 for subject in subjects:
     print 'Running subject ' + subject
     ##
-    #root_dir = '/nobackup/clustercache/liem/LIFE'
-    root_dir = '/data/liem-1/LIFE'
-    root_dir_2 = '/scr/adenauer2/Franz/LIFE_WD' #'/data/liem-2/LIFE'
-    working_dir = os.path.join(root_dir_2, 'wd', subject)
-    data_dir = root_dir
+    root_dir = '/data/liem-1/LIFE_redo'
+    working_dir = os.path.join('/data/liem-3/LIFE_redo/funct', 'wd', subject)
+    data_dir = '/data/liem-1/LIFE'
     out_dir = os.path.join(root_dir, 'preprocessed', subject, 'resting_state')
 
     freesurfer_dir = '/scr/kennedy2/LIFE/freesurfer_all/'
