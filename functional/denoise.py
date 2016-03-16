@@ -16,6 +16,7 @@ from motionfilter import build_filter1
 from compcor import extract_noise_components
 from normalize_timeseries import time_normalizer
 from nipype.utils.filemanip import list_to_filename
+from fix_header_tr import fix_TR_fs
 
 '''
 Main workflow for denoising
@@ -196,15 +197,28 @@ def create_denoise_pipeline(name='denoise'):
                      (filter2, outputnode, [('out_f', 'comp_F'),
                                             ('out_pf', 'comp_pF')])
                      ])
+
+
+
+    # write TR into header again (glms remove it)
+    # do not use mri_convert interface as it has a bug (already fixed in niyppe master)
+    fix_tr = Node(util.Function(input_names=['in_file', 'TR_sec'], output_names=['out_file'], function=fix_TR_fs),
+                  name='fix_tr')
+    denoise.connect(inputnode, 'tr', fix_tr, 'TR_sec')
+    denoise.connect(filter2, 'out_res', fix_tr, 'in_file')
+
+
+
     # bandpass filter denoised file
     bandpass_filter = Node(fsl.TemporalFilter(out_file='rest_denoised_bandpassed.nii.gz'),
                            name='bandpass_filter')
     bandpass_filter.plugin_args = {'submit_specs': 'request_memory = 17000'}
     denoise.connect([(inputnode, bandpass_filter, [('highpass_sigma', 'highpass_sigma'),
                                                    ('lowpass_sigma', 'lowpass_sigma')]),
-                     (filter2, bandpass_filter, [('out_res', 'in_file')]),
-                     # FL added fullspectrum to outputnoded
-                     (filter2, outputnode, [('out_res', 'ts_fullspectrum')])
+                     # (filter2, bandpass_filter, [('out_res', 'in_file')]),
+                     # (filter2, outputnode, [('out_res', 'ts_fullspectrum')]),
+                     (fix_tr, bandpass_filter, [('out_file', 'in_file')]),
+                     (fix_tr, outputnode, [('out_file', 'ts_fullspectrum')])
                      ])
     # time-normalize scans
     normalize_time = Node(util.Function(input_names=['in_file', 'tr'],

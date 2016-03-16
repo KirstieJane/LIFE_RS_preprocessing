@@ -86,11 +86,13 @@ def create_lemon_resting(subject, working_dir, data_dir, freesurfer_dir, out_dir
     # workflow to transform timeseries to MNI
     ants_registration = create_ants_registration_pipeline()
     ants_registration.inputs.inputnode.ref = standard_brain_resampled
+    ants_registration.inputs.inputnode.tr_sec = TR
 
     # FL added fullspectrum
     # workflow to transform fullspectrum timeseries to MNI
     ants_registration_full = create_ants_registration_pipeline('ants_registration_full')
     ants_registration_full.inputs.inputnode.ref = standard_brain_resampled
+    ants_registration_full.inputs.inputnode.tr_sec = TR
 
     # workflow to smooth
     smoothing = create_smoothing_pipeline()
