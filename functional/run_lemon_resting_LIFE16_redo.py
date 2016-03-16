@@ -18,7 +18,7 @@ for subject in subjects:
     ##
     root_dir = '/data/liem-1/LIFE_redo'
     working_dir = os.path.join('/data/liem-3/LIFE_redo/funct', 'wd', subject)
-    data_dir = '/data/liem-1/LIFE'
+    data_dir = '/data/liem-1/LIFE_redo'
     out_dir = os.path.join(root_dir, 'preprocessed', subject, 'resting_state')
 
     freesurfer_dir = '/scr/kennedy2/LIFE/freesurfer_all/'

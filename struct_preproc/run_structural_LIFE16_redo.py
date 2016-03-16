@@ -18,7 +18,6 @@ subjects = ['LI00156432', 'LI01171116', 'LI01287335']
 for subject in subjects:
     print 'Running subject ' + subject
     root_dir = '/data/liem-1/LIFE_redo'
-    root_dir_2 = '/scr/adenauer2/Franz/LIFE_WD'
     working_dir = os.path.join('/data/liem-3/LIFE_redo/struct', 'wd', subject)
     data_dir = os.path.join(root_dir, subject)
     out_dir = os.path.join(root_dir, 'preprocessed', subject, 'structural')
