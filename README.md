@@ -1,5 +1,6 @@
-# LIFE_Lemon_mod_mod
+# LIFE RESTING STATE PREPROCESSING PIPELINE
 
+Preprocessing of the LIFE resting state data (http://life.uni-leipzig.de/). Largely based on Julia Huntenburg's LSD/LEMON scripts (https://github.com/NeuroanatomyAndConnectivity/pipelines/tree/master/src/lsd_lemon)
 
 
 # Results
